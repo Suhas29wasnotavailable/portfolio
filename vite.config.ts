@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => ({
+// Base path is deploy-specific: GitHub Pages serves under /portfolio/
+// (its workflow sets VITE_BASE); Vercel, Railway and local dev serve at /.
+export default defineConfig({
   plugins: [react(), tailwindcss()],
-  // GitHub Pages serves the site under /portfolio/; dev stays at /
-  base: command === 'build' ? '/portfolio/' : '/',
-}));
+  base: process.env.VITE_BASE ?? '/',
+});
