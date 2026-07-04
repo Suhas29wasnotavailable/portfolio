@@ -1,0 +1,137 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ */
+/*  Design tokens                                                      */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  --color-void: #050508;
+  --color-ink: #f2f5f9;
+  --color-mist: #98a4b5;
+  --color-faint: #5b6472;
+  --color-holo: #6fc3ff;
+  --color-holo-soft: rgba(111, 195, 255, 0.35);
+  --color-holo-faint: rgba(111, 195, 255, 0.12);
+  --color-line: rgba(242, 245, 249, 0.08);
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+
+html {
+  background: var(--color-void);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(111, 195, 255, 0.25) transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--color-void);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(111, 195, 255, 0.25);
+  color: var(--color-ink);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(111, 195, 255, 0.18);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(111, 195, 255, 0.35);
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-holo);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Lenis recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ */
+/*  The intro's radiating palette, reused as a hover accent            */
+/* ------------------------------------------------------------------ */
+
+@keyframes hey-gradient-drift {
+  0%,
+  100% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(50deg);
+  }
+}
+
+.hey-gradient-hover {
+  transition: color 0.3s ease;
+}
+
+.hey-gradient-hover:hover {
+  background-image: radial-gradient(circle at 30% 40%, #ff6188 0%, #fc9867 50%, #ffd866 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: hey-gradient-drift 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hey-gradient-hover:hover {
+    animation: none;
+  }
+}
+
+/* Scroll hint under the ASCII introduction */
+@keyframes hint-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+.hint-drift {
+  animation: hint-drift 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint-drift {
+    animation: none;
+  }
+}
