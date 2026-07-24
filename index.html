@@ -11,13 +11,13 @@
     <meta name="theme-color" content="#050508" />
     <title>Suhas Y — Portfolio</title>
     <style>
-      /* Painted before any JS/CSS loads — prevents a flash of the wrong theme. */
-      html,
-      body {
+      /* Painted before any JS/CSS loads — prevents a flash of the wrong theme.
+         Only <html> carries the backdrop; <body> stays transparent so the
+         fixed BackgroundFX canvas behind it shows through. */
+      html {
         background: #050508;
       }
-      html[data-theme='light'],
-      html[data-theme='light'] body {
+      html[data-theme='light'] {
         background: #f4f3ee;
       }
     </style>

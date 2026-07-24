@@ -49,20 +49,21 @@ html {
   background: var(--color-void);
   scrollbar-width: thin;
   scrollbar-color: rgba(111, 195, 255, 0.25) transparent;
+  transition: background-color 0.5s ease;
 }
 
 body {
   margin: 0;
-  background: var(--color-void);
+  /* transparent so the fixed BackgroundFX canvas (behind content) shows
+     through; the base colour lives on <html>. */
+  background: transparent;
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
-  transition:
-    background-color 0.5s ease,
-    color 0.5s ease;
+  transition: color 0.5s ease;
 }
 
 ::selection {

@@ -20,8 +20,15 @@ import { prefersReducedMotion } from '../../lib/scroll';
 
 const CHAR_RAMP = [' ', '.', ':', ';', '+', '*', 'x', '%', '#', '@'] as const;
 
-/** Posterize a saturation-boosted pixel so the atlas stays small. */
-function quantizeColor(r: number, g: number, b: number): string {
+/**
+ * Posterize a saturation-boosted pixel so the atlas stays small.
+ *
+ * The lightness window is theme-dependent: on the dark page we keep the
+ * glyphs bright so they sing on black; on the light "paper" page we pull
+ * them down into deeper, more saturated tones so the portrait actually
+ * reads as ink rather than washing out against the background.
+ */
+function quantizeColor(r: number, g: number, b: number, isLight: boolean): string {
   // rgb → hsl
   const rn = r / 255;
   const gn = g / 255;
@@ -38,10 +45,16 @@ function quantizeColor(r: number, g: number, b: number): string {
     else if (max === gn) h = ((bn - rn) / d + 2) / 6;
     else h = ((rn - gn) / d + 4) / 6;
   }
-  // boost colour so it sings on black, then posterize each channel
   const qh = Math.round(h * 18) * 20; // 18 hue steps
+  if (isLight) {
+    // deeper, punchier ink for the paper background
+    const qs = Math.min(100, Math.round((s * 1.75 + 0.12) * 4) * 25);
+    const ql = Math.min(56, Math.max(12, Math.round(l * 5) * 11)); // 12–56% — visible on paper
+    return `hsl(${qh}, ${qs}%, ${ql}%)`;
+  }
+  // boost colour so it sings on black, then posterize each channel
   const qs = Math.min(100, Math.round((s * 1.55 + 0.06) * 4) * 25); // 4 sat steps
-  const ql = Math.min(88, Math.max(22, Math.round((l * 1.12) * 6) * 17)); // 6 light steps, clamped visible
+  const ql = Math.min(88, Math.max(22, Math.round(l * 1.12 * 6) * 17)); // 6 light steps, clamped visible
   return `hsl(${qh}, ${qs}%, ${ql}%)`;
 }
 
@@ -74,6 +87,7 @@ export default function AsciiPortrait({ src, alt }: { src: string; alt: string }
     const reduced = prefersReducedMotion();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
+    let isLight = document.documentElement.getAttribute('data-theme') === 'light';
     let cells: Cell[] = [];
     let cellW = 0;
     let cellH = 0;
@@ -128,7 +142,7 @@ export default function AsciiPortrait({ src, alt }: { src: string; alt: string }
           const v = Math.min(1, Math.max(0, (lum - 0.08) * 1.25));
           const charIdx = Math.round(v * (CHAR_RAMP.length - 1));
           if (charIdx === 0) continue; // near-black → empty, keeps the page's void
-          const key = quantizeColor(data[i], data[i + 1], data[i + 2]);
+          const key = quantizeColor(data[i], data[i + 1], data[i + 2], isLight);
           let colorIdx = colorIndex.get(key);
           if (colorIdx === undefined) {
             colorIdx = colorIndex.size;
@@ -252,12 +266,29 @@ export default function AsciiPortrait({ src, alt }: { src: string; alt: string }
     });
     ro.observe(wrap);
 
+    // rebuild the glyph atlas with theme-appropriate colours when the
+    // light/dark switch is flipped
+    const themeObserver = new MutationObserver(() => {
+      const nowLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (nowLight === isLight) return;
+      isLight = nowLight;
+      if (img.complete && img.naturalWidth > 0) {
+        build();
+        draw();
+      }
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
     return () => {
       gsap.ticker.remove(tick);
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerleave', onLeave);
       io.disconnect();
       ro.disconnect();
+      themeObserver.disconnect();
     };
   }, [src]);
 

@@ -3,6 +3,7 @@ import { initSmoothScroll, destroySmoothScroll, prefersReducedMotion } from './l
 
 import TargetCursor from './components/reactbits/TargetCursor';
 import Navbar from './components/ui/Navbar';
+import BackgroundFX from './components/ui/BackgroundFX';
 
 import Intro from './components/sections/Intro';
 import Home from './components/sections/Home';
@@ -25,6 +26,8 @@ export default function App() {
 
   return (
     <>
+      <BackgroundFX />
+
       <TargetCursor targetSelector=".cursor-target" cursorColor="#6fc3ff" activeOnly />
 
       <Navbar />
