@@ -45,7 +45,7 @@ export const identity = {
   headingAccent: 'Suhas',
   headingPost: '.',
   intro:
-    'Computer Science (AI) student at Manipal Institute of Technology, Bengaluru, and an aspiring AI engineer. I like building things where solid engineering meets thoughtful design — lately that means RAG systems, LLM tooling, and the occasional interactive experiment like this one.',
+    'Computer Science student at Manipal Institute of Technology, Bengaluru, specializing in artificial intelligence. I build software where the engineering is sound and the design is considered — currently retrieval systems, LLM tooling, and interfaces worth shipping.',
   portrait: asset('assets/portrait.jpg'),
 };
 
@@ -62,16 +62,14 @@ export const navigation = {
 
 export const intro = {
   ascii: 'hey!',
-  hint: 'welcome :)',
-  hintSub: 'scroll down',
 };
 
 export const about = {
-  lead: "I'm studying Computer Science with a focus on AI at Manipal Institute of Technology, Bengaluru — and spending most of my time outside class building software around language models.",
+  lead: 'I study Computer Science with a focus on AI at Manipal Institute of Technology, Bengaluru. Most of my time outside class goes into building software around language models.',
   paragraphs: [
-    "Right now I'm a project intern at Persistent Systems, building enterprise dashboards that track how organizations actually use AI — usage, tokens, credits and cost across Claude, GitHub Copilot, Cursor and ChatGPT. It's taught me that the unglamorous layer of AI — governance, cost, reliability — is where a lot of the interesting engineering hides.",
-    "I don't build projects to fill a GitHub profile. The ones I care about are the ones that force me to learn something unfamiliar: a new retrieval technique, a difficult architecture decision, an interface that has to feel right and not just work.",
-    'Away from the keyboard I draw — traditional and digital — and that creative side shapes how I write software more than any framework has. I also travel whenever I can; new places and people have a way of resetting how you think.',
+    'As a project intern at Persistent Systems, I build enterprise dashboards that measure how organizations use AI — tracking usage, tokens, credits and cost across Claude, GitHub Copilot, Cursor and ChatGPT. The work has convinced me that the unglamorous side of AI — governance, cost, reliability — is where much of the real engineering lives.',
+    "I don't build projects to pad a GitHub profile. The ones worth my time force me to learn something new: a retrieval technique I haven't used, a hard architecture decision, an interface that has to feel right rather than merely work.",
+    'Away from the keyboard I draw, both traditional and digital, and that side shapes how I approach software more than any framework has. I travel when I can; new places and people are the fastest way I know to reset how I think.',
   ],
   interestsTitle: "A few things I'm exploring at the moment:",
   interests: [
@@ -109,7 +107,7 @@ export const experience: Job[] = [
 ];
 
 export const projectsIntro =
-  'Projects I built to learn something I didn’t know yet — not to add another repository to GitHub.';
+  "A few projects built to learn something I didn't already know — not to add another repository to the pile.";
 
 export const projects: Project[] = [
   {
@@ -137,7 +135,7 @@ export const projects: Project[] = [
 ];
 
 export const artworkIntro =
-  'Drawing came long before programming. A collection of traditional and digital pieces, exploring different styles and mediums.';
+  'Drawing came long before code. A selection of traditional and digital work across a few different styles and mediums.';
 
 export const artworks: Artwork[] = [
   // Edit titles freely — they show in the lightbox caption.
@@ -158,5 +156,5 @@ export const contact = {
   linkedin: 'https://www.linkedin.com/in/suhassrivathsasay',
   resume: asset('assets/resume.pdf'),
   blurb:
-    "Whether it's an interesting project, an internship conversation, or you just want to talk shop about AI systems — my inbox is open.",
+    "Whether it's a project worth building, an internship conversation, or a chance to talk shop about AI systems — my inbox is open.",
 };

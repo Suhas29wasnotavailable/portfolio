@@ -6,7 +6,7 @@
 export default function SectionLabel({ title }: { title: string }) {
   return (
     <h2 className="flex items-center gap-5">
-      <span className="hey-gradient-hover font-display text-3xl font-medium tracking-[-0.01em] text-ink md:text-4xl">
+      <span className="hey-gradient-hover font-display text-3xl font-semibold tracking-[-0.02em] text-ink md:text-4xl">
         <span className="mr-3 text-holo">&gt;</span>
         {title}
       </span>

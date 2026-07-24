@@ -25,8 +25,8 @@ export default function Contact() {
           </RevealItem>
 
           <RevealItem>
-            <h2 className="font-display mt-8 text-5xl font-semibold tracking-[-0.025em] text-ink md:text-6xl">
-              Say hello.
+            <h2 className="font-display mt-8 text-5xl font-bold tracking-[-0.03em] text-ink md:text-7xl">
+              Let's talk.
             </h2>
           </RevealItem>
 

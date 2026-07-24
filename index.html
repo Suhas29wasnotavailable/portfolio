@@ -11,12 +11,27 @@
     <meta name="theme-color" content="#050508" />
     <title>Suhas Y — Portfolio</title>
     <style>
-      /* Painted before any JS/CSS loads — prevents a white flash. */
+      /* Painted before any JS/CSS loads — prevents a flash of the wrong theme. */
       html,
       body {
         background: #050508;
       }
+      html[data-theme='light'],
+      html[data-theme='light'] body {
+        background: #f4f3ee;
+      }
     </style>
+    <script>
+      /* Apply the saved theme before first paint (defaults to dark). */
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

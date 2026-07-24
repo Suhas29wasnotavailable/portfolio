@@ -20,6 +20,28 @@
 }
 
 /* ------------------------------------------------------------------ */
+/*  Light theme — the same tokens, re-pointed for a warm paper look.   */
+/*  Utilities compile to var(--color-*), so overriding the variables   */
+/*  here flips the entire palette. Defaults above stay the dark mode.  */
+/* ------------------------------------------------------------------ */
+
+:root[data-theme='light'] {
+  --color-void: #f4f3ee;
+  --color-ink: #14161c;
+  --color-mist: #4b525f;
+  --color-faint: #838b98;
+  --color-holo: #1f6fe0;
+  --color-holo-soft: rgba(31, 111, 224, 0.32);
+  --color-holo-faint: rgba(31, 111, 224, 0.1);
+  --color-line: rgba(20, 22, 28, 0.12);
+  color-scheme: light;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ */
 /*  Base                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -38,6 +60,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
 }
 
 ::selection {

@@ -15,7 +15,7 @@ export default function Home() {
         {/* text */}
         <Reveal>
           <RevealItem>
-            <h1 className="font-display text-5xl leading-tight font-semibold tracking-[-0.03em] text-ink md:text-7xl">
+            <h1 className="font-display text-5xl leading-[1.02] font-bold tracking-[-0.04em] text-ink md:text-7xl">
               {identity.headingPre}
               <span className="text-holo">{identity.headingAccent}</span>
               {identity.headingPost}

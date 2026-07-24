@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 import { navigation, identity, contact } from '../../data/content';
 import { getLenis } from '../../lib/scroll';
+import ThemeToggle from './ThemeToggle';
 
 /**
  * Fixed navigation — name on the far left, section links beside it,
@@ -72,6 +73,9 @@ export default function Navbar() {
                 <Icon size={17} />
               </a>
             ))}
+
+            <span className="h-4 w-px bg-line" aria-hidden="true" />
+            <ThemeToggle />
           </div>
         </nav>
       </div>

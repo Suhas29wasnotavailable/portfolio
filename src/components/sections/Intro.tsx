@@ -7,8 +7,8 @@ import { intro } from '../../data/content';
 /**
  * Section 1 — the ASCII introduction.
  *
- * One viewport of black holding the ASCIIText animation ("hey!") and a
- * quiet welcome hint, both centered on the same axis.
+ * One viewport holding the ASCIIText animation ("hey!") with a single
+ * scroll cue beneath it — no words, just a drifting chevron.
  *
  * ASCIIText runs its own WebGL + per-frame ASCII conversion, so we
  * mount it only while this section is anywhere near the viewport and
@@ -32,16 +32,15 @@ export default function Intro() {
     <section ref={sectionRef} id="top" className="relative h-screen w-full overflow-hidden" aria-label="Introduction">
       {near && <ASCIIText text={intro.ascii} enableWaves asciiFontSize={7} planeBaseHeight={6} />}
 
-      {/* welcome hint — centered on the same axis as the ASCII text */}
+      {/* scroll cue — a single drifting chevron, no words */}
       <motion.div
-        className="pointer-events-none absolute inset-x-0 bottom-12 flex flex-col items-center gap-3 text-center"
+        className="pointer-events-none absolute inset-x-0 bottom-12 flex flex-col items-center text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 1.2, ease: 'easeOut' }}
+        aria-hidden="true"
       >
-        <p className="font-mono text-[13px] tracking-[0.3em] text-mist uppercase">{intro.hint}</p>
-        <p className="font-mono text-[11px] tracking-[0.25em] text-faint uppercase">{intro.hintSub}</p>
-        <FiChevronDown className="hint-drift text-holo/70" size={18} aria-hidden="true" />
+        <FiChevronDown className="hint-drift text-holo/70" size={22} />
       </motion.div>
     </section>
   );
