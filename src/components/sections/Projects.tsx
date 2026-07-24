@@ -1,17 +1,16 @@
 import { FiGithub, FiArrowUpRight } from 'react-icons/fi';
 import { projects, projectsIntro, type Project } from '../../data/content';
 import { Reveal, RevealItem } from '../ui/Reveal';
-import SectionLabel from '../ui/SectionLabel';
+import SectionHeader from '../ui/SectionHeader';
 
 /**
- * Projects — professional rows, alternating media/text. Interactions
- * are limited to subtle hover states and clean transitions. When a
- * project declares a `video`, it is embedded in place of the still.
+ * Projects — large indexed editorial rows, media and text alternating,
+ * with a big serif title and a running project number.
  */
 
 function ProjectMedia({ project }: { project: Project }) {
   return (
-    <div className="group cursor-target relative overflow-hidden rounded-lg border border-line bg-white/[0.02] transition-colors duration-500 hover:border-holo/40">
+    <div className="group cursor-target relative overflow-hidden rounded-xl border border-line bg-white/[0.02] transition-colors duration-500 hover:border-holo/40">
       {project.video ? (
         <video
           className="block aspect-video w-full object-cover"
@@ -27,7 +26,7 @@ function ProjectMedia({ project }: { project: Project }) {
           width={1200}
           height={750}
           loading="lazy"
-          className="block aspect-video w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+          className="block aspect-video w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           draggable={false}
         />
       )}
@@ -41,24 +40,25 @@ function ProjectMedia({ project }: { project: Project }) {
   );
 }
 
-function ProjectRow({ project, flip }: { project: Project; flip: boolean }) {
+function ProjectRow({ project, index, flip }: { project: Project; index: number; flip: boolean }) {
   return (
     <RevealItem>
-      <article className="grid items-center gap-8 md:grid-cols-2 md:gap-14">
-        <div className={flip ? 'md:order-2' : undefined}>
+      <article className="grid items-center gap-8 md:grid-cols-12 md:gap-12">
+        <div className={`md:col-span-7 ${flip ? 'md:order-2' : ''}`}>
           <ProjectMedia project={project} />
         </div>
 
-        <div className={flip ? 'md:order-1' : undefined}>
-          <h3 className="font-subhead text-3xl font-semibold text-ink md:text-4xl">
-            {project.title}
-          </h3>
+        <div className={`md:col-span-5 ${flip ? 'md:order-1' : ''}`}>
+          <div className="flex items-baseline gap-4">
+            <span className="font-mono text-sm text-holo">{String(index + 1).padStart(2, '0')}</span>
+            <h3 className="font-subhead text-4xl leading-none font-semibold text-ink md:text-5xl">
+              {project.title}
+            </h3>
+          </div>
 
-          <p className="mt-4 max-w-lg leading-relaxed text-mist">{project.description}</p>
+          <p className="mt-5 max-w-lg leading-relaxed text-mist">{project.description}</p>
 
-          <p className="mt-5 font-mono text-[13px] tracking-wide text-faint">
-            {project.technologies.join('  ·  ')}
-          </p>
+          <p className="mt-5 font-mono text-[13px] tracking-wide text-faint">{project.technologies.join('  ·  ')}</p>
 
           <div className="mt-6 flex items-center gap-7">
             <a
@@ -91,19 +91,19 @@ function ProjectRow({ project, flip }: { project: Project; flip: boolean }) {
 export default function Projects() {
   return (
     <section id="projects" className="relative w-full" aria-label="Projects">
-      <div className="relative mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-24 md:px-10 md:py-32">
         <Reveal>
           <RevealItem>
-            <SectionLabel title="projects" />
+            <SectionHeader index="04" title="projects" kicker="things i've built" />
           </RevealItem>
 
           <RevealItem>
-            <p className="mt-6 max-w-xl leading-relaxed text-mist">{projectsIntro}</p>
+            <p className="max-w-xl leading-relaxed text-mist">{projectsIntro}</p>
           </RevealItem>
 
-          <div className="mt-14 flex flex-col gap-20 md:gap-24">
+          <div className="mt-16 flex flex-col gap-20 md:gap-28">
             {projects.map((project, i) => (
-              <ProjectRow key={project.title} project={project} flip={i % 2 === 1} />
+              <ProjectRow key={project.title} project={project} index={i} flip={i % 2 === 1} />
             ))}
           </div>
         </Reveal>

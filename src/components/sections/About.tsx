@@ -1,24 +1,31 @@
-import { FiChevronRight } from 'react-icons/fi';
 import { about } from '../../data/content';
 import { Reveal, RevealItem } from '../ui/Reveal';
-import SectionLabel from '../ui/SectionLabel';
+import SectionHeader from '../ui/SectionHeader';
 
 /**
- * About — text on the left, a photo on the right, and a short list of
- * current interests.
+ * About — an editorial spread: a large serif lead statement, then an
+ * asymmetric grid with the photo offset left and the story + a tagged
+ * list of interests on the right.
  */
 export default function About() {
   return (
     <section id="about" className="relative w-full" aria-label="About">
-      <div className="relative mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-24 md:px-10 md:py-32">
         <Reveal>
           <RevealItem>
-            <SectionLabel title="about me" />
+            <SectionHeader index="02" title="about" kicker="who i am" />
           </RevealItem>
 
-          <div className="mt-12 grid gap-12 md:grid-cols-[0.75fr_1.25fr] md:gap-16">
-            {/* photo on the left — the ASCII portrait in Home sits on the right */}
-            <div className="relative mx-auto w-full max-w-[300px] md:mx-0">
+          {/* oversized serif lead */}
+          <RevealItem>
+            <p className="font-subhead max-w-5xl text-3xl leading-[1.22] text-ink md:text-5xl md:leading-[1.18]">
+              {about.lead}
+            </p>
+          </RevealItem>
+
+          <div className="mt-16 grid gap-12 md:grid-cols-12 md:gap-10">
+            {/* photo — offset left */}
+            <div className="md:col-span-5 lg:col-span-4">
               <RevealItem>
                 <div className="group relative overflow-hidden rounded-lg border border-line transition-colors duration-500 hover:border-holo/40">
                   <img
@@ -39,14 +46,9 @@ export default function About() {
               </RevealItem>
             </div>
 
-            <div>
-              <RevealItem>
-                <p className="text-xl leading-relaxed font-medium text-ink md:text-2xl md:leading-relaxed">
-                  {about.lead}
-                </p>
-              </RevealItem>
-
-              <div className="mt-8 space-y-5">
+            {/* story + interests */}
+            <div className="md:col-span-7 md:col-start-6">
+              <div className="space-y-5">
                 {about.paragraphs.map(paragraph => (
                   <RevealItem key={paragraph.slice(0, 24)}>
                     <p className="leading-relaxed text-mist">{paragraph}</p>
@@ -55,11 +57,15 @@ export default function About() {
               </div>
 
               <RevealItem>
-                <p className="mt-10 font-mono text-[13px] tracking-wide text-ink/80">{about.interestsTitle}</p>
-                <ul className="mt-4 grid grid-cols-1 gap-x-10 gap-y-2.5 sm:grid-cols-2">
+                <p className="mt-10 font-mono text-[12px] tracking-[0.2em] text-faint uppercase">
+                  {about.interestsTitle}
+                </p>
+                <ul className="mt-5 flex flex-wrap gap-2.5">
                   {about.interests.map(interest => (
-                    <li key={interest} className="flex items-center gap-2.5 text-[15px] text-mist">
-                      <FiChevronRight className="shrink-0 text-holo" size={14} aria-hidden="true" />
+                    <li
+                      key={interest}
+                      className="cursor-target rounded-full border border-line px-4 py-2 font-mono text-[12px] text-mist transition-colors duration-300 hover:border-holo/50 hover:text-ink"
+                    >
                       {interest}
                     </li>
                   ))}

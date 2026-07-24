@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { artworks, artworkIntro } from '../../data/content';
 import { Reveal, RevealItem } from '../ui/Reveal';
-import SectionLabel from '../ui/SectionLabel';
+import SectionHeader from '../ui/SectionHeader';
 import Lightbox from '../ui/Lightbox';
 
 /**
@@ -14,18 +14,18 @@ export default function ArtworkGallery() {
 
   return (
     <section id="artwork" className="relative w-full" aria-label="Artwork">
-      <div className="relative mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-24 md:px-10 md:py-32">
         <Reveal>
           <RevealItem>
-            <SectionLabel title="artwork" />
+            <SectionHeader index="05" title="artwork" kicker="when i'm not coding" />
           </RevealItem>
 
           <RevealItem>
-            <p className="mt-6 max-w-xl leading-relaxed text-mist">{artworkIntro}</p>
+            <p className="max-w-xl leading-relaxed text-mist">{artworkIntro}</p>
           </RevealItem>
 
           <RevealItem>
-            <div className="mt-12 columns-2 gap-5 md:columns-3">
+            <div className="mt-12 columns-2 gap-5 md:columns-3 lg:columns-4">
               {artworks.map((artwork, i) => (
                 <button
                   key={artwork.src}

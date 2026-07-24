@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronRight } from 'react-icons/fi';
 import { experience } from '../../data/content';
 import { Reveal, RevealItem } from '../ui/Reveal';
-import SectionLabel from '../ui/SectionLabel';
+import SectionHeader from '../ui/SectionHeader';
 
 /**
  * Experience — a quiet tabbed layout: companies down the side, the
@@ -15,14 +15,14 @@ export default function Experience() {
 
   return (
     <section id="experience" className="relative w-full" aria-label="Experience">
-      <div className="relative mx-auto w-full max-w-5xl px-6 py-20 md:px-10 md:py-28">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-24 md:px-10 md:py-32">
         <Reveal>
           <RevealItem>
-            <SectionLabel title="experience" />
+            <SectionHeader index="03" title="experience" kicker="where i've worked" />
           </RevealItem>
 
           <RevealItem>
-            <div className="mt-12 grid gap-8 md:grid-cols-[200px_1fr] md:gap-14">
+            <div className="grid gap-8 md:grid-cols-[240px_1fr] md:gap-16">
               {/* company tabs */}
               <div
                 className="flex gap-1 overflow-x-auto md:flex-col md:gap-0 md:border-l md:border-line"
@@ -49,7 +49,7 @@ export default function Experience() {
               </div>
 
               {/* role details */}
-              <div className="min-h-[220px]">
+              <div className="min-h-[220px] max-w-3xl">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={job.company}
