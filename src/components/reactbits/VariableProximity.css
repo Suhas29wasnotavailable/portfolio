@@ -1,0 +1,18 @@
+/* Font-agnostic: inherits the display face from the parent (Space Grotesk),
+   so the proximity effect animates the 'wght' axis in the site's own type. */
+.variable-proximity {
+  font-family: inherit;
+  will-change: font-variation-settings;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,6 +1,7 @@
 import { FiGithub, FiLinkedin, FiFileText, FiMail } from 'react-icons/fi';
 import { contact, identity } from '../../data/content';
 import { Reveal, RevealItem } from '../ui/Reveal';
+import ProximityText from '../ui/ProximityText';
 
 /**
  * Contact — the last stop. Four quiet links do the talking.
@@ -25,8 +26,8 @@ export default function Contact() {
           </RevealItem>
 
           <RevealItem>
-            <h2 className="font-display mt-8 text-5xl font-bold tracking-[-0.03em] text-ink md:text-7xl">
-              Let's talk.
+            <h2 className="font-display mt-8 text-5xl tracking-[-0.03em] text-ink md:text-7xl">
+              <ProximityText label="Let's talk." from="'wght' 520" to="'wght' 700" radius={160} />
             </h2>
           </RevealItem>
 

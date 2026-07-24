@@ -16,7 +16,7 @@ import { prefersReducedMotion } from '../../lib/scroll';
  */
 
 const GLYPHS = ['*', '+', '.', ':', 'o', 'x', '#', '@', '/', '=', '~', '·'] as const;
-const CELL = 26; // px between glyph slots
+const CELL = 34; // px between glyph slots — larger = sparser field
 
 /** Stable per-cell pseudo-random value in [0,1). */
 function hash(c: number, r: number): number {
@@ -82,8 +82,8 @@ export default function BackgroundFX() {
           // racing through the full spectrum at full saturation ---
           const h = hash(c, r);
           const twinkle = Math.sin(time * 0.9 + h * 6.2831853);
-          if (twinkle > 0.94) {
-            const s = (twinkle - 0.94) / 0.06; // 0..1
+          if (twinkle > 0.975) {
+            const s = (twinkle - 0.975) / 0.025; // 0..1
             const sHue = (h * 360 + time * 90) % 360;
             ctx.fillStyle = `hsla(${sHue}, 100%, ${sparkLight}%, ${(s * sparkMaxAlpha).toFixed(3)})`;
             const gg = GLYPHS[(c * 3 + r * 7 + Math.floor(time * 3)) % GLYPHS.length];
@@ -101,9 +101,9 @@ export default function BackgroundFX() {
           const b = Math.cos(r * 0.5 - time * 0.4 + phase * 0.7);
           const diag = Math.sin((c * 0.9 + r * 1.3) * 0.15 - time * 0.3);
           const v = 0.5 + 0.34 * a * b + 0.3 * diag;
-          if (v < 0.72) continue;
+          if (v < 0.86) continue;
 
-          const strength = Math.min(1, (v - 0.72) / 0.3); // 0..1
+          const strength = Math.min(1, (v - 0.86) / 0.16); // 0..1
           const hue = (c * 7 + r * 11 + time * 22 + scroll * 0.35) % 360;
           ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, ${(strength * maxAlpha).toFixed(3)})`;
 
@@ -125,14 +125,14 @@ export default function BackgroundFX() {
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const h = hash(c, r);
-          if (h > 0.9) {
+          if (h > 0.955) {
             ctx.fillStyle = `hsla(${(h * 360) % 360}, 100%, ${isLight ? 52 : 66}%, ${isLight ? 0.5 : 0.85})`;
             ctx.fillText(GLYPHS[(c * 3 + r * 7) % GLYPHS.length], c * CELL, r * CELL);
             continue;
           }
           if (!isLight) continue;
           const v = 0.5 + 0.34 * Math.sin(c * 0.45) * Math.cos(r * 0.5) + 0.3 * Math.sin((c * 0.9 + r * 1.3) * 0.15);
-          if (v < 0.72) continue;
+          if (v < 0.86) continue;
           const hue = (c * 7 + r * 11) % 360;
           ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, ${maxAlpha})`;
           ctx.fillText(GLYPHS[(c * 3 + r * 7) % GLYPHS.length], c * CELL, r * CELL);
