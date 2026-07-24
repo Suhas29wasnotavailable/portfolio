@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 // Fonts are bundled locally so the site is fully self-contained.
 import '@fontsource-variable/inter/index.css';
 import '@fontsource-variable/space-grotesk/index.css';
+import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource/ibm-plex-mono/600.css';
 

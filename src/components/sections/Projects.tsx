@@ -50,7 +50,7 @@ function ProjectRow({ project, flip }: { project: Project; flip: boolean }) {
         </div>
 
         <div className={flip ? 'md:order-1' : undefined}>
-          <h3 className="font-display text-3xl font-semibold tracking-[-0.02em] text-ink md:text-4xl">
+          <h3 className="font-subhead text-3xl font-semibold text-ink md:text-4xl">
             {project.title}
           </h3>
 

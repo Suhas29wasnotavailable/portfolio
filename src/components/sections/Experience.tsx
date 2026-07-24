@@ -58,7 +58,7 @@ export default function Experience() {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <h3 className="font-display flex flex-wrap items-center gap-x-3 gap-y-2 text-xl font-semibold text-ink md:text-2xl">
+                    <h3 className="font-subhead flex flex-wrap items-center gap-x-3 gap-y-2 text-2xl font-semibold text-ink md:text-3xl">
                       <span>{job.role}</span>
                       <span style={job.brandColor ? { color: job.brandColor } : undefined} className={job.brandColor ? undefined : 'text-holo'}>
                         @
