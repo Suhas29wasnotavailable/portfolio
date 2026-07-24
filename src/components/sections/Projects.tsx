@@ -34,7 +34,7 @@ function ProjectMedia({ project }: { project: Project }) {
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
-          background: 'linear-gradient(150deg, rgba(111,195,255,0.07), rgba(111,195,255,0) 45%)',
+          background: 'linear-gradient(150deg, rgba(169,208,107,0.09), rgba(169,208,107,0) 45%)',
         }}
       />
     </div>

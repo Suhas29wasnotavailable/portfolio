@@ -79,7 +79,7 @@ export default function Lightbox({
             <img
               src={artwork.src}
               alt={artwork.title}
-              className="rounded-sm object-contain shadow-[0_0_80px_rgba(111,195,255,0.08)]"
+              className="rounded-sm object-contain shadow-[0_0_80px_rgba(169,208,107,0.1)]"
               style={{
                 // explicit sizing: SVG sources have no intrinsic pixel size
                 aspectRatio: `${artwork.width} / ${artwork.height}`,

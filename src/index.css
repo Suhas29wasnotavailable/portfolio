@@ -9,9 +9,9 @@
   --color-ink: #f2f5f9;
   --color-mist: #98a4b5;
   --color-faint: #5b6472;
-  --color-holo: #6fc3ff;
-  --color-holo-soft: rgba(111, 195, 255, 0.35);
-  --color-holo-faint: rgba(111, 195, 255, 0.12);
+  --color-holo: #a9d06b; /* light matcha green — the site accent */
+  --color-holo-soft: rgba(169, 208, 107, 0.35);
+  --color-holo-faint: rgba(169, 208, 107, 0.13);
   --color-line: rgba(242, 245, 249, 0.08);
 
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
@@ -30,9 +30,9 @@
   --color-ink: #14161c;
   --color-mist: #4b525f;
   --color-faint: #838b98;
-  --color-holo: #1f6fe0;
-  --color-holo-soft: rgba(31, 111, 224, 0.32);
-  --color-holo-faint: rgba(31, 111, 224, 0.1);
+  --color-holo: #5f8f3a; /* deeper matcha for contrast on paper */
+  --color-holo-soft: rgba(95, 143, 58, 0.32);
+  --color-holo-faint: rgba(95, 143, 58, 0.12);
   --color-line: rgba(20, 22, 28, 0.12);
   color-scheme: light;
 }
@@ -48,7 +48,7 @@
 html {
   background: var(--color-void);
   scrollbar-width: thin;
-  scrollbar-color: rgba(111, 195, 255, 0.25) transparent;
+  scrollbar-color: rgba(169, 208, 107, 0.3) transparent;
   transition: background-color 0.5s ease;
 }
 
@@ -67,7 +67,7 @@ body {
 }
 
 ::selection {
-  background: rgba(111, 195, 255, 0.25);
+  background: rgba(169, 208, 107, 0.3);
   color: var(--color-ink);
 }
 
@@ -78,11 +78,11 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(111, 195, 255, 0.18);
+  background: rgba(169, 208, 107, 0.22);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(111, 195, 255, 0.35);
+  background: rgba(169, 208, 107, 0.4);
 }
 
 :focus-visible {

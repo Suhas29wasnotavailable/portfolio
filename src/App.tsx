@@ -28,7 +28,7 @@ export default function App() {
     <>
       <BackgroundFX />
 
-      <TargetCursor targetSelector=".cursor-target" cursorColor="#6fc3ff" activeOnly />
+      <TargetCursor targetSelector=".cursor-target" cursorColor="#8fbf55" activeOnly />
 
       <Navbar />
 

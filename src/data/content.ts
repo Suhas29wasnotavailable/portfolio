@@ -36,6 +36,12 @@ export interface Job {
   period: string;
   location?: string;
   bullets: string[];
+  /** Brand logo shown in place of the company name in the role heading. */
+  logo?: string;
+  /** Company site the logo links to. */
+  website?: string;
+  /** Brand colour used for the company name in the tab list. */
+  brandColor?: string;
 }
 
 export const identity = {
@@ -89,6 +95,9 @@ export const experience: Job[] = [
     company: 'Persistent Systems',
     role: 'Project Intern',
     period: '12 Jun 2026 — 11 Sep 2026',
+    logo: asset('assets/logos/persistent.png'),
+    website: 'https://www.persistent.com',
+    brandColor: '#EE7623',
     bullets: [
       'Building enterprise dashboards that monitor AI usage, token consumption, credits and costs across platforms like Claude, GitHub Copilot, Cursor and ChatGPT.',
       'Working with Power BI and Power Query to turn complex enterprise datasets into reporting that decision-makers actually use.',
@@ -99,6 +108,9 @@ export const experience: Job[] = [
     role: 'Summer Intern',
     period: 'Jun 2025 — Jul 2025',
     location: 'Colombo, Sri Lanka',
+    logo: asset('assets/logos/tyax.png'),
+    website: 'https://www.tyaxinc.com',
+    brandColor: '#4F9E3A',
     bullets: [
       'Got hands-on with enterprise networking and AI-powered surveillance systems in a live production environment.',
       'Wrote technical documentation and learned how engineering teams operate in an international professional setting.',

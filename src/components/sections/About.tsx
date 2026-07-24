@@ -32,7 +32,7 @@ export default function About() {
                     className="pointer-events-none absolute inset-0"
                     style={{
                       background:
-                        'linear-gradient(165deg, rgba(111,195,255,0.10), rgba(111,195,255,0) 45%, rgba(5,5,8,0.25))',
+                        'linear-gradient(165deg, rgba(169,208,107,0.12), rgba(169,208,107,0) 45%, rgba(5,5,8,0.25))',
                     }}
                   />
                 </div>

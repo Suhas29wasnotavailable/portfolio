@@ -36,10 +36,11 @@ export default function Experience() {
                     role="tab"
                     aria-selected={i === active}
                     onClick={() => setActive(i)}
-                    className={`cursor-target px-5 py-3 text-left font-mono text-[13px] whitespace-nowrap transition-colors duration-300 md:-ml-px md:border-l-2 ${
+                    style={item.brandColor ? { color: item.brandColor } : undefined}
+                    className={`cursor-target px-5 py-3 text-left font-mono text-[13px] font-medium whitespace-nowrap transition-all duration-300 md:-ml-px md:border-l-2 ${
                       i === active
-                        ? 'border-holo bg-holo-faint text-holo'
-                        : 'border-transparent text-faint hover:text-mist'
+                        ? 'border-current bg-holo-faint opacity-100'
+                        : 'border-transparent opacity-55 hover:opacity-100'
                     }`}
                   >
                     {item.company}
@@ -57,8 +58,23 @@ export default function Experience() {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <h3 className="font-display text-xl font-semibold text-ink md:text-2xl">
-                      {job.role} <span className="text-holo">@ {job.company}</span>
+                    <h3 className="font-display flex flex-wrap items-center gap-x-3 gap-y-2 text-xl font-semibold text-ink md:text-2xl">
+                      <span>{job.role}</span>
+                      <span className="text-holo">@</span>
+                      {job.logo && job.website ? (
+                        <a
+                          href={job.website}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${job.company} — visit website`}
+                          title={`${job.company} — visit website`}
+                          className="cursor-target inline-flex items-center rounded-md border border-line bg-white px-2.5 py-1.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-holo/50 hover:shadow-md"
+                        >
+                          <img src={job.logo} alt={job.company} className="block h-8 w-auto md:h-9" draggable={false} />
+                        </a>
+                      ) : (
+                        <span className="text-holo">{job.company}</span>
+                      )}
                     </h3>
                     <p className="mt-2 font-mono text-[13px] tracking-wide text-faint uppercase">
                       {job.period}

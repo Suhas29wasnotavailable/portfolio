@@ -47,9 +47,9 @@ function quantizeColor(r: number, g: number, b: number, isLight: boolean): strin
   }
   const qh = Math.round(h * 18) * 20; // 18 hue steps
   if (isLight) {
-    // deeper, punchier ink for the paper background
-    const qs = Math.min(100, Math.round((s * 1.75 + 0.12) * 4) * 25);
-    const ql = Math.min(56, Math.max(12, Math.round(l * 5) * 11)); // 12–56% — visible on paper
+    // deep, punchy ink so the face actually reads on paper
+    const qs = Math.min(100, Math.round((s * 1.8 + 0.18) * 4) * 25);
+    const ql = Math.min(44, Math.max(10, Math.round(l * 4) * 11)); // 10–44% — strong contrast on paper
     return `hsl(${qh}, ${qs}%, ${ql}%)`;
   }
   // boost colour so it sings on black, then posterize each channel
@@ -58,7 +58,7 @@ function quantizeColor(r: number, g: number, b: number, isLight: boolean): strin
   return `hsl(${qh}, ${qs}%, ${ql}%)`;
 }
 
-const COLS = 64;
+const COLS = 74;
 const CELL_ASPECT = 1.16; // characters are taller than they are wide
 const BOX_ASPECT = 5 / 4; // portrait crop: height / width
 const RADIUS = 105; // px — cursor influence

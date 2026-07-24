@@ -18,12 +18,6 @@ import { prefersReducedMotion } from '../../lib/scroll';
 const GLYPHS = ['*', '+', '.', ':', 'o', 'x', '#', '@', '/', '=', '~', '·'] as const;
 const CELL = 26; // px between glyph slots
 
-/** Stable per-cell pseudo-random value in [0,1). */
-function hash(c: number, r: number): number {
-  const x = Math.sin(c * 127.1 + r * 311.7) * 43758.5453;
-  return x - Math.floor(x);
-}
-
 export default function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -71,28 +65,10 @@ export default function BackgroundFX() {
       const light = isLight ? 42 : 62;
       const sat = isLight ? 92 : 88;
 
-      // brightness of the vivid "spark" pops — matched to the intro's glow
-      const sparkLight = isLight ? 52 : 66;
-      const sparkMaxAlpha = isLight ? 0.62 : 0.95;
-
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-          // --- random vivid pops: a handful of pixels "ignite" like the
-          // ascii "hey!", each on its own hash-offset twinkle cycle, hue
-          // racing through the full spectrum at full saturation ---
-          const h = hash(c, r);
-          const twinkle = Math.sin(time * 0.9 + h * 6.2831853);
-          if (twinkle > 0.94) {
-            const s = (twinkle - 0.94) / 0.06; // 0..1
-            const sHue = (h * 360 + time * 90) % 360;
-            ctx.fillStyle = `hsla(${sHue}, 100%, ${sparkLight}%, ${(s * sparkMaxAlpha).toFixed(3)})`;
-            const gg = GLYPHS[(c * 3 + r * 7 + Math.floor(time * 3)) % GLYPHS.length];
-            ctx.fillText(gg, c * CELL, r * CELL + drift);
-            continue;
-          }
-
-          // --- the subtle base field: two waves plus a diagonal low-freq
-          // term so it never visibly tiles ---
+          // two waves plus a diagonal low-frequency term so the field never
+          // visibly tiles — it reads as one slow, organic drift
           const a = Math.sin(c * 0.45 + time * 0.5 + phase);
           const b = Math.cos(r * 0.5 - time * 0.4 + phase * 0.7);
           const diag = Math.sin((c * 0.9 + r * 1.3) * 0.15 - time * 0.3);
