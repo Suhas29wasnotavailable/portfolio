@@ -60,7 +60,9 @@ export default function Experience() {
                   >
                     <h3 className="font-display flex flex-wrap items-center gap-x-3 gap-y-2 text-xl font-semibold text-ink md:text-2xl">
                       <span>{job.role}</span>
-                      <span className="text-holo">@</span>
+                      <span style={job.brandColor ? { color: job.brandColor } : undefined} className={job.brandColor ? undefined : 'text-holo'}>
+                        @
+                      </span>
                       {job.logo && job.website ? (
                         <a
                           href={job.website}

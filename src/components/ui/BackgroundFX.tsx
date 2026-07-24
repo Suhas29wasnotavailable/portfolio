@@ -91,6 +91,10 @@ export default function BackgroundFX() {
             continue;
           }
 
+          // Dark mode gets ONLY the vivid sparks (new). Light mode also
+          // keeps the subtle base field underneath (old + new).
+          if (!isLight) continue;
+
           // --- the subtle base field: two waves plus a diagonal low-freq
           // term so it never visibly tiles ---
           const a = Math.sin(c * 0.45 + time * 0.5 + phase);
@@ -111,7 +115,8 @@ export default function BackgroundFX() {
       if (running) raf = requestAnimationFrame(frame);
     };
 
-    // one static frame for reduced-motion users
+    // one static frame for reduced-motion users. Dark gets a sparse
+    // scatter of vivid dots (frozen sparks); light also keeps the field.
     const staticFrame = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const maxAlpha = isLight ? 0.28 : 0.18;
@@ -119,6 +124,13 @@ export default function BackgroundFX() {
       const sat = isLight ? 92 : 88;
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
+          const h = hash(c, r);
+          if (h > 0.9) {
+            ctx.fillStyle = `hsla(${(h * 360) % 360}, 100%, ${isLight ? 52 : 66}%, ${isLight ? 0.5 : 0.85})`;
+            ctx.fillText(GLYPHS[(c * 3 + r * 7) % GLYPHS.length], c * CELL, r * CELL);
+            continue;
+          }
+          if (!isLight) continue;
           const v = 0.5 + 0.34 * Math.sin(c * 0.45) * Math.cos(r * 0.5) + 0.3 * Math.sin((c * 0.9 + r * 1.3) * 0.15);
           if (v < 0.72) continue;
           const hue = (c * 7 + r * 11) % 360;

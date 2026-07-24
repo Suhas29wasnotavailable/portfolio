@@ -1,12 +1,13 @@
 import { identity } from '../../data/content';
 import { Reveal, RevealItem } from '../ui/Reveal';
-import AsciiPortrait from '../ui/AsciiPortrait';
+// The interactive ASCII portrait is kept for an easy switch-back — to
+// restore it, re-import AsciiPortrait and swap it for the <img> below.
+// import AsciiPortrait from '../ui/AsciiPortrait';
 
 /**
  * Section 2 — Home.
  *
- * A cursive greeting beside an interactive ASCII portrait: the photo
- * rendered as a glyph grid that scatters away from the cursor.
+ * A greeting beside a portrait photo, shown as-is in a clean frame.
  */
 export default function Home() {
   return (
@@ -26,10 +27,25 @@ export default function Home() {
           </RevealItem>
         </Reveal>
 
-        {/* interactive ASCII portrait */}
-        <Reveal className="mx-auto w-full max-w-[340px] md:max-w-[400px]">
+        {/* portrait photo — shown as-is */}
+        <Reveal className="mx-auto w-full max-w-[360px] md:max-w-[440px]">
           <RevealItem>
-            <AsciiPortrait src={identity.portrait} alt="ASCII portrait of Suhas — move your cursor across it" />
+            <div className="group relative overflow-hidden rounded-xl border border-line transition-colors duration-500 hover:border-holo/40">
+              <img
+                src={identity.portrait}
+                alt="Suhas"
+                loading="eager"
+                className="block w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                draggable={false}
+              />
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(165deg, rgba(169,208,107,0.12), rgba(169,208,107,0) 45%, rgba(5,5,8,0.20))',
+                }}
+              />
+            </div>
           </RevealItem>
         </Reveal>
       </div>
