@@ -1,7 +1,10 @@
-/* Font-agnostic: inherits the display face from the parent (Space Grotesk),
-   so the proximity effect animates the 'wght' axis in the site's own type. */
+/* Roboto Flex carries a very wide weight axis (100–1000) plus optical size,
+   so the proximity swell reads as a dramatic thin -> ultra-black shift —
+   far more noticeable than Space Grotesk's narrow 300–700 range. */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
 .variable-proximity {
-  font-family: inherit;
+  font-family: 'Roboto Flex', 'Space Grotesk Variable', sans-serif;
   will-change: font-variation-settings;
 }
 

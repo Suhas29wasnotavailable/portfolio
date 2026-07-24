@@ -3,16 +3,16 @@ import VariableProximity from '../reactbits/VariableProximity';
 
 /**
  * Drop-in wrapper around VariableProximity: sets up the relative
- * container it measures the cursor against, and defaults the weight
- * range to Space Grotesk's 'wght' axis so headings swell toward the
- * cursor. Pass `className` for the type styles (size, colour, family).
+ * container it measures the cursor against. Defaults to a wide Roboto
+ * Flex weight + optical-size swing so headings visibly go from thin at
+ * rest to heavy under the cursor. Pass `className` for extra type styles.
  */
 export default function ProximityText({
   label,
   className,
-  from = "'wght' 480",
-  to = "'wght' 700",
-  radius = 130,
+  from = "'wght' 300, 'opsz' 16",
+  to = "'wght' 900, 'opsz' 64",
+  radius = 150,
 }: {
   label: string;
   className?: string;

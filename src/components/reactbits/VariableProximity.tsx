@@ -1,8 +1,8 @@
 // Adapted from ReactBits "Variable Proximity" — ported to TypeScript and
-// framer-motion, and made font-agnostic so it inherits the site's display
-// face (Space Grotesk, which carries a 'wght' axis) instead of a bundled
-// Roboto Flex. Each letter's font-variation-settings interpolate between the
-// `from` and `to` values based on how close the cursor is.
+// framer-motion. Each letter's font-variation-settings interpolate between
+// the `from` and `to` values based on cursor distance. The `.variable-proximity`
+// class (see CSS) uses Roboto Flex for its very wide weight + optical-size
+// axes, so the swell reads as a dramatic thin -> ultra-black shift.
 
 import { forwardRef, useMemo, useRef, useEffect, type CSSProperties } from 'react';
 import { motion } from 'framer-motion';
@@ -21,7 +21,10 @@ function useAnimationFrame(callback: () => void) {
 }
 
 function useMousePositionRef(containerRef: React.RefObject<HTMLElement | null>) {
-  const positionRef = useRef({ x: 0, y: 0 });
+  // Start far off-screen so every letter rests at the `from` weight until
+  // the cursor actually moves near it (otherwise (0,0) sits on the heading's
+  // top-left corner and bolds the first letters before any interaction).
+  const positionRef = useRef({ x: -9999, y: -9999 });
 
   useEffect(() => {
     const updatePosition = (x: number, y: number) => {

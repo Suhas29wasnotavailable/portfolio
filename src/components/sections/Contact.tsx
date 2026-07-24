@@ -27,7 +27,12 @@ export default function Contact() {
 
           <RevealItem>
             <h2 className="font-display mt-8 text-5xl tracking-[-0.03em] text-ink md:text-7xl">
-              <ProximityText label="Let's talk." from="'wght' 520" to="'wght' 700" radius={160} />
+              <ProximityText
+                label="Let's talk."
+                from="'wght' 340, 'opsz' 40"
+                to="'wght' 900, 'opsz' 144"
+                radius={200}
+              />
             </h2>
           </RevealItem>
 
