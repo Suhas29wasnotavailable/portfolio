@@ -4,17 +4,9 @@
 // class (see CSS) uses Roboto Flex for its very wide weight + optical-size
 // axes, so the swell reads as a dramatic thin -> ultra-black shift.
 
-import { forwardRef, useMemo, useRef, useEffect, useState, type CSSProperties } from 'react';
+import { forwardRef, useMemo, useRef, useEffect, type CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 import './VariableProximity.css';
-
-// Glyphs the letters resolve into on hover — a nod to the intro's ascii art.
-const ASCII = '@#$%&*8B0OZWMmwqpdbkhao=+~<>/|()[]{}?';
-/** Stable ascii glyph for a given letter + position, so it's static (no flicker). */
-function asciiFor(ch: string, i: number): string {
-  if (ch === ' ') return ' ';
-  return ASCII[(ch.charCodeAt(0) * 13 + i * 29) % ASCII.length];
-}
 
 function useAnimationFrame(callback: () => void) {
   useEffect(() => {
@@ -70,8 +62,6 @@ interface VariableProximityProps {
   falloff?: 'linear' | 'exponential' | 'gaussian';
   className?: string;
   style?: CSSProperties;
-  /** When true, hovering the text resolves the letters into static ascii glyphs. */
-  asciiOnHover?: boolean;
 }
 
 const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((props, ref) => {
@@ -84,10 +74,8 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((p
     falloff = 'linear',
     className = '',
     style,
-    asciiOnHover = true,
   } = props;
 
-  const [ascii, setAscii] = useState(false);
   const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const interpolatedSettingsRef = useRef<string[]>([]);
   const mousePositionRef = useMousePositionRef(containerRef);
@@ -171,9 +159,7 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((p
   return (
     <span
       ref={ref}
-      className={`${className} variable-proximity${ascii ? ' ascii-on' : ''}`}
-      onPointerEnter={asciiOnHover ? () => setAscii(true) : undefined}
-      onPointerLeave={asciiOnHover ? () => setAscii(false) : undefined}
+      className={`${className} variable-proximity`}
       // resting weight before the cursor arrives / when a letter is out of range
       style={{ display: 'inline', fontVariationSettings: fromFontVariationSettings, ...style }}
     >
@@ -193,7 +179,7 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((p
                 }}
                 aria-hidden="true"
               >
-                {ascii ? asciiFor(letter, currentLetterIndex) : letter}
+                {letter}
               </motion.span>
             );
           })}
