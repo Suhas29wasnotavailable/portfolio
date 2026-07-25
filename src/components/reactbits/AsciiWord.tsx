@@ -1,18 +1,19 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Renders a word as static ASCII art on a 2D canvas — the word's shapes
- * are rebuilt out of many small monospace glyphs, painted with the intro's
- * "hey!" gradient. No animation (unlike the WebGL ASCIIText). Used as a
- * hover overlay so headings "become the ascii text" from the intro.
+ * Renders a word as *animated* ASCII art on a 2D canvas — the word's
+ * shapes are rebuilt from many small monospace glyphs that ripple, shimmer
+ * and shift hue, echoing the intro "hey!". Used as a hover overlay so a
+ * heading dynamically "becomes the ascii text" while the variable-proximity
+ * weight effect stays as the resting interaction underneath.
  */
 
 const RAMP = ' .:-=+*oO#%8B@$WM&'; // light → dense, indexed by ink coverage
 
 export default function AsciiWord({
   text,
-  fontFamily = "'Space Grotesk Variable', sans-serif",
-  heightEm = 1.45,
+  fontFamily = "'Roboto Flex', 'Space Grotesk Variable', sans-serif",
+  heightEm = 1.3,
 }: {
   text: string;
   fontFamily?: string;
@@ -26,16 +27,15 @@ export default function AsciiWord({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    let raf = 0;
     let cancelled = false;
 
-    const draw = () => {
-      if (cancelled) return;
-
+    const build = () => {
       // 1) render the word to an offscreen canvas (white on transparent)
       const F = 200;
       const src = document.createElement('canvas');
       const sctx = src.getContext('2d', { willReadFrequently: true });
-      if (!sctx) return;
+      if (!sctx) return null;
       sctx.font = `800 ${F}px ${fontFamily}`;
       const m = sctx.measureText(text);
       const asc = m.actualBoundingBoxAscent || F * 0.72;
@@ -52,37 +52,13 @@ export default function AsciiWord({
       sctx.fillText(text, pad, pad + asc);
       const data = sctx.getImageData(0, 0, tw, th).data;
 
-      // 2) ascii grid — fewer, larger rows so the glyphs stay legible/bright
+      // 2) ascii grid + precomputed coverage per cell
       const rows = 12;
-      const cellAspect = 0.55; // char width / height
+      const cellAspect = 0.55;
       const cols = Math.max(1, Math.round((tw / th) * rows / cellAspect));
       const stepX = tw / cols;
       const stepY = th / rows;
-
-      // 3) visible canvas
-      const CH = 16;
-      const CW = Math.max(1, Math.round(CH * cellAspect));
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const outW = cols * CW;
-      const outH = rows * CH;
-      canvas.width = Math.round(outW * dpr);
-      canvas.height = Math.round(outH * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, outW, outH);
-
-      // bright multi-hue gradient — echoes the intro "hey!" (teal/green body,
-      // pink/orange/yellow accents) so it pops on the dark background
-      const grad = ctx.createLinearGradient(0, 0, outW, outH);
-      grad.addColorStop(0.0, '#7ff3d8');
-      grad.addColorStop(0.28, '#a6ff9e');
-      grad.addColorStop(0.52, '#ff9ec0');
-      grad.addColorStop(0.76, '#ffb27a');
-      grad.addColorStop(1.0, '#ffe58c');
-      ctx.fillStyle = grad;
-      ctx.font = `${CH}px 'IBM Plex Mono', ui-monospace, monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
+      const coverage = new Float32Array(cols * rows);
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const x0 = Math.floor(c * stepX);
@@ -97,23 +73,71 @@ export default function AsciiWord({
               n++;
             }
           }
-          const a = n ? sum / n / 255 : 0;
-          if (a < 0.1) continue;
-          const idx = Math.min(RAMP.length - 1, 2 + Math.floor(a * (RAMP.length - 3)));
-          ctx.fillText(RAMP[idx], (c + 0.5) * CW, (r + 0.5) * CH);
+          coverage[r * cols + c] = n ? sum / n / 255 : 0;
         }
       }
 
-      // scale to roughly the heading's height
+      // 3) visible canvas sizing
+      const CH = 16;
+      const CW = Math.max(1, Math.round(CH * cellAspect));
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const outW = cols * CW;
+      const outH = rows * CH;
+      canvas.width = Math.round(outW * dpr);
+      canvas.height = Math.round(outH * dpr);
       canvas.style.height = `${heightEm}em`;
       canvas.style.width = `${(outW / outH) * heightEm}em`;
+
+      const grad = ctx.createLinearGradient(0, 0, outW, outH);
+      grad.addColorStop(0.0, '#7ff3d8');
+      grad.addColorStop(0.28, '#a6ff9e');
+      grad.addColorStop(0.52, '#ff9ec0');
+      grad.addColorStop(0.76, '#ffb27a');
+      grad.addColorStop(1.0, '#ffe58c');
+
+      return { cols, rows, coverage, CW, CH, outW, outH, dpr, grad };
     };
 
-    if (document.fonts?.ready) document.fonts.ready.then(draw);
-    draw();
+    const g = build();
+    if (!g) return;
+
+    const start = performance.now();
+    const frame = (now: number) => {
+      if (cancelled) return;
+      const t = (now - start) / 1000;
+      const { cols, rows, coverage, CW, CH, outW, outH, dpr, grad } = g;
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, outW, outH);
+      // dynamic: colours drift through the spectrum over time
+      ctx.filter = `hue-rotate(${((t * 45) % 360).toFixed(1)}deg)`;
+      ctx.fillStyle = grad;
+      ctx.font = `${CH}px 'IBM Plex Mono', ui-monospace, monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const a = coverage[r * cols + c];
+          if (a < 0.1) continue;
+          // ripple — a travelling wave, like the intro's distortion
+          const dx = Math.cos(t * 2.1 + r * 0.55) * (CW * 0.35);
+          const dy = Math.sin(t * 2.6 + c * 0.5) * (CH * 0.28);
+          // shimmer — nudge the glyph choice with time so it flickers
+          const flick = 0.5 + 0.5 * Math.sin(t * 9 + (r * 7 + c * 13));
+          const base = 2 + Math.floor(a * (RAMP.length - 4));
+          const idx = Math.min(RAMP.length - 1, base + (flick > 0.82 ? 1 : 0));
+          ctx.fillText(RAMP[idx], (c + 0.5) * CW + dx, (r + 0.5) * CH + dy);
+        }
+      }
+      ctx.filter = 'none';
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
 
     return () => {
       cancelled = true;
+      cancelAnimationFrame(raf);
     };
   }, [text, fontFamily, heightEm]);
 

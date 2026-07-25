@@ -4,9 +4,10 @@ import AsciiWord from '../reactbits/AsciiWord';
 
 /**
  * Drop-in wrapper around VariableProximity: letters swell toward the
- * cursor (Roboto Flex weight axis). On hover the whole word also resolves
- * into static ASCII art — the word rebuilt from small glyphs in the
- * intro's "hey!" gradient — overlaid in place of the text.
+ * cursor (Roboto Flex weight axis). On hover, the animated "hey!" ASCII
+ * art also plays over the word in place — the text stays visible (so the
+ * proximity swell still reads) and the rippling, hue-shifting ascii is
+ * blended on top.
  */
 export default function ProximityText({
   label,
@@ -31,20 +32,21 @@ export default function ProximityText({
       onPointerEnter={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
     >
-      <span className="transition-opacity duration-150" style={{ opacity: hover ? 0 : 1 }}>
-        <VariableProximity
-          label={label}
-          className={className}
-          fromFontVariationSettings={from}
-          toFontVariationSettings={to}
-          containerRef={ref}
-          radius={radius}
-          falloff="gaussian"
-        />
-      </span>
+      <VariableProximity
+        label={label}
+        className={className}
+        fromFontVariationSettings={from}
+        toFontVariationSettings={to}
+        containerRef={ref}
+        radius={radius}
+        falloff="gaussian"
+      />
 
       {hover && (
-        <span className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2">
+        <span
+          className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2"
+          style={{ mixBlendMode: 'difference' }}
+        >
           <AsciiWord text={label} />
         </span>
       )}
