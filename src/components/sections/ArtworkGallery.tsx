@@ -5,9 +5,27 @@ import SectionHeader from '../ui/SectionHeader';
 import Lightbox from '../ui/Lightbox';
 
 /**
- * Artwork — a clean masonry gallery. Images lazy-load with reserved
- * dimensions (no layout shift), and clicking opens the fullscreen
- * lightbox. The work itself is the whole show.
+ * Bento tile sizes (column × row spans) keyed by position — a mix of
+ * large feature tiles, wide tiles and tall tiles so the gallery reads as
+ * a dynamic mosaic rather than an even grid. Wraps if there are more
+ * artworks than entries.
+ */
+const BENTO: { c: number; r: number }[] = [
+  { c: 2, r: 3 }, // large feature
+  { c: 2, r: 2 }, // wide
+  { c: 1, r: 2 },
+  { c: 1, r: 3 }, // tall
+  { c: 1, r: 2 },
+  { c: 1, r: 3 }, // tall
+  { c: 2, r: 3 }, // large feature
+  { c: 1, r: 2 },
+  { c: 1, r: 3 }, // tall
+];
+
+/**
+ * Artwork — a bento mosaic. Tiles vary in size and pack with dense
+ * auto-flow; clicking any piece opens the fullscreen lightbox with the
+ * full, uncropped image.
  */
 export default function ArtworkGallery() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -25,27 +43,29 @@ export default function ArtworkGallery() {
           </RevealItem>
 
           <RevealItem>
-            <div className="mt-12 columns-2 gap-5 md:columns-3 lg:columns-4">
-              {artworks.map((artwork, i) => (
-                <button
-                  key={artwork.src}
-                  type="button"
-                  onClick={() => setOpenIndex(i)}
-                  aria-label={`View ${artwork.title}`}
-                  className="cursor-target group mb-5 block w-full overflow-hidden rounded-md border border-line transition-colors duration-500 hover:border-holo/35"
-                >
-                  <img
-                    src={artwork.src}
-                    alt={artwork.title}
-                    width={artwork.width}
-                    height={artwork.height}
-                    loading="lazy"
-                    decoding="async"
-                    className="block w-full transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-110"
-                    draggable={false}
-                  />
-                </button>
-              ))}
+            <div className="mt-12 grid auto-rows-[120px] grid-cols-2 gap-4 [grid-auto-flow:dense] sm:auto-rows-[150px] md:grid-cols-4 lg:auto-rows-[160px]">
+              {artworks.map((artwork, i) => {
+                const span = BENTO[i % BENTO.length];
+                return (
+                  <button
+                    key={artwork.src}
+                    type="button"
+                    onClick={() => setOpenIndex(i)}
+                    aria-label={`View ${artwork.title}`}
+                    style={{ gridColumn: `span ${span.c}`, gridRow: `span ${span.r}` }}
+                    className="cursor-target group relative block overflow-hidden rounded-lg border border-line transition-colors duration-500 hover:border-holo/40"
+                  >
+                    <img
+                      src={artwork.src}
+                      alt={artwork.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110"
+                      draggable={false}
+                    />
+                  </button>
+                );
+              })}
             </div>
           </RevealItem>
         </Reveal>
