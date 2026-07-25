@@ -1,13 +1,11 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import VariableProximity from '../reactbits/VariableProximity';
-import AsciiWord from '../reactbits/AsciiWord';
 
 /**
- * Drop-in wrapper around VariableProximity: letters swell toward the
- * cursor (Roboto Flex weight axis). On hover, the animated "hey!" ASCII
- * art also plays over the word in place — the text stays visible (so the
- * proximity swell still reads) and the rippling, hue-shifting ascii is
- * blended on top.
+ * Drop-in wrapper around VariableProximity: sets up the relative
+ * container it measures the cursor against. Defaults to a wide Roboto
+ * Flex weight + optical-size swing so headings visibly go from thin at
+ * rest to heavy under the cursor. Pass `className` for extra type styles.
  */
 export default function ProximityText({
   label,
@@ -23,15 +21,9 @@ export default function ProximityText({
   radius?: number;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [hover, setHover] = useState(false);
 
   return (
-    <span
-      ref={ref}
-      className="relative inline-block"
-      onPointerEnter={() => setHover(true)}
-      onPointerLeave={() => setHover(false)}
-    >
+    <span ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
       <VariableProximity
         label={label}
         className={className}
@@ -41,15 +33,6 @@ export default function ProximityText({
         radius={radius}
         falloff="gaussian"
       />
-
-      {hover && (
-        <span
-          className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2"
-          style={{ mixBlendMode: 'difference' }}
-        >
-          <AsciiWord text={label} />
-        </span>
-      )}
     </span>
   );
 }
