@@ -71,13 +71,13 @@ export const intro = {
 };
 
 export const about = {
-  lead: 'I study Computer Science with a focus on AI at Manipal Institute of Technology, Bengaluru. Most of my time outside class goes into building software around language models.',
+  lead: 'I split my time between teaching machines to read and drawing by hand — most of what I build sits somewhere in the overlap.',
   paragraphs: [
-    'As a project intern at Persistent Systems, I build enterprise dashboards that measure how organizations use AI — tracking usage, tokens, credits and cost across Claude, GitHub Copilot, Cursor and ChatGPT. The work has convinced me that the unglamorous side of AI — governance, cost, reliability — is where much of the real engineering lives.',
-    "I don't build projects to pad a GitHub profile. The ones worth my time force me to learn something new: a retrieval technique I haven't used, a hard architecture decision, an interface that has to feel right rather than merely work.",
-    'Away from the keyboard I draw, both traditional and digital, and that side shapes how I approach software more than any framework has. I travel when I can; new places and people are the fastest way I know to reset how I think.',
+    "Right now I'm interning at Persistent Systems, building dashboards that put a hard number on a company's AI habit — every token, credit and dollar spent across Claude, GitHub Copilot, Cursor and ChatGPT. Nobody grows up dreaming about cost governance; I didn't expect to find it this interesting.",
+    "I don't build things to farm green squares on GitHub. I go after the project that's a size too big for me — a retrieval trick I haven't tried, an architecture I'm not sure will hold, an interface that has to feel right and not just pass its tests. If I already know how it ends, I've usually lost interest halfway.",
+    "Close the laptop and there's a decent chance I've got a pen in my hand — anime, portraits, whatever's been rattling around my head that week. Drawing shapes how I write software more than any framework has: composition, restraint, knowing when a thing is actually finished. Whatever curiosity is left over goes into airports and streets I've never walked.",
   ],
-  interestsTitle: "A few things I'm exploring at the moment:",
+  interestsTitle: 'Currently down the rabbit hole on:',
   interests: [
     'Retrieval-Augmented Generation',
     'AI agents',

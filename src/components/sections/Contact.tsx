@@ -73,7 +73,6 @@ export default function Contact() {
                 © {new Date().getFullYear()} {identity.name}
               </span>
               <span>Bengaluru, India</span>
-              <span className="text-holo">Built from scratch</span>
             </div>
           </RevealItem>
         </Reveal>

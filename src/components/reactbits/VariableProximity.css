@@ -8,6 +8,17 @@
   will-change: font-variation-settings;
 }
 
+/* On hover the letters resolve into ascii glyphs, painted with the intro's
+   "hey!" gradient — static, no wave. */
+.variable-proximity.ascii-on {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  background-image: radial-gradient(circle at 40% 40%, #ff6188 0%, #fc9867 50%, #ffd866 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

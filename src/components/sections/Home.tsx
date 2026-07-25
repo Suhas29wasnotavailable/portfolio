@@ -37,12 +37,6 @@ export default function Home() {
               </RevealItem>
 
               <RevealItem>
-                <p className="font-subhead mt-6 text-2xl leading-tight text-mist italic md:text-3xl">
-                  Computer Science <span className="text-holo not-italic">×</span> Artificial Intelligence
-                </p>
-              </RevealItem>
-
-              <RevealItem>
                 <p className="mt-8 max-w-xl text-lg leading-relaxed text-mist">{identity.intro}</p>
               </RevealItem>
             </div>
