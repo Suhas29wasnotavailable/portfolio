@@ -3,6 +3,11 @@
 A cinematic, droid-guided personal portfolio. Black canvas, white typography,
 holographic blue light.
 
+
+[![Live](https://img.shields.io/badge/Live-suhasy.vercel.app-3FB950?style=for-the-badge&logo=vercel&logoColor=0D1117&labelColor=3FB950)](https://suhasy.vercel.app)
+
+**[Open the live site →](https://suhasy.vercel.app)**
+
 ## Run it
 
 ```bash
