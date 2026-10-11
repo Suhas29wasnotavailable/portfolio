@@ -123,24 +123,32 @@ export const projectsIntro =
 
 export const projects: Project[] = [
   {
-    title: 'LoreMind',
-    // Verify this description matches the real project and edit freely.
+    title: 'BLRoad',
     description:
-      'An AI companion for fictional universes. LoreMind ingests novels, wikis and notes, then answers questions about characters, timelines and lore with grounded, cited responses — built around a retrieval-augmented pipeline tuned for long, interconnected narratives.',
-    technologies: ['Python', 'LangChain', 'FastAPI', 'React', 'PostgreSQL', 'pgvector'],
-    github: 'https://github.com/Suhas29wasnotavailable/loremind', // PLACEHOLDER repo path
+      "Propose a fix for Bengaluru's roads and get it reviewed the way a transport planner would: seven scored factors, cost, build time and peak-commute impact. The design is then built on a live map, street by street, with corridors snapped onto real roads, and two proposals can be compared head to head.",
+    technologies: ['TypeScript', 'React', 'Leaflet', 'Express', 'OSRM', 'Zod'],
+    github: 'https://github.com/Suhas29wasnotavailable/blroad',
+    live: undefined,
+    image: asset('assets/projects/blroad.jpg'),
+    video: undefined,
+  },
+  {
+    title: 'LoreMind',
+    description:
+      'A Star Wars lore engine. Questions go through hybrid retrieval (dense embeddings and BM25, fused with reciprocal rank fusion, then a cross-encoder reranker) with a grounding gate that declines to answer when the archive has nothing relevant. Answers arrive as an opening crawl. It runs on ONNX Runtime in an 849 MB container that cold-starts in 2 seconds.',
+    technologies: ['Python', 'FastAPI', 'Qdrant', 'ONNX Runtime', 'BM25', 'Docker'],
+    github: 'https://github.com/Suhas29wasnotavailable/loremind',
     live: undefined,
     image: asset('assets/projects/loremind.jpg'),
     video: undefined,
   },
   {
     title: 'CodePattern Analyzer',
-    // Verify this description matches the real project and edit freely.
     description:
-      'A code-authorship analysis tool. It fingerprints the structural style of source code — AST shape, complexity metrics, character n-grams — and matches it against known author patterns to attribute who likely wrote a snippet, with an AI-detection signal that flags code that reads machine-generated rather than human.',
-    technologies: ['Python', 'scikit-learn', 'FastAPI', 'React'],
-    github: 'https://github.com/Suhas29wasnotavailable/codepattern-analyzer', // PLACEHOLDER repo path
-    live: undefined,
+      'Identifies who wrote a piece of Python from style alone. Each file becomes a 206-dimension fingerprint (AST structure such as nesting depth and cyclomatic complexity, plus character n-grams), which an MLP classifier matches against five known authors.',
+    technologies: ['Python', 'scikit-learn', 'FastAPI', 'AST'],
+    github: 'https://github.com/Suhas29wasnotavailable/CodePatternAnalyzer',
+    live: 'https://code-pattern-analyzer.vercel.app',
     image: asset('assets/projects/codepattern.jpg'),
     video: undefined,
   },
