@@ -89,6 +89,9 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
   useEffect(() => {
     if (isMobile || !cursorRef.current) return;
 
+    // The tween target behind the hover strength. Captured once so the cleanup resets the same
+    // object this effect animated.
+    const activeStrength = activeStrengthRef.current;
     const originalCursor = document.body.style.cursor;
     if (hideDefaultCursor && !activeOnly) {
       document.body.style.cursor = 'none';
@@ -361,7 +364,9 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       document.body.style.cursor = originalCursor;
       isActiveRef.current = false;
       targetCornerPositionsRef.current = null;
-      activeStrengthRef.current.current = 0;
+      // A hover tween may still be running on it; stop it so it can't write after unmount.
+      gsap.killTweensOf(activeStrength);
+      activeStrength.current = 0;
     };
   }, [
     targetSelector,
